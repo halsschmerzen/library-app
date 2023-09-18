@@ -69,6 +69,13 @@ function printBooks() {
     bookPages.textContent = `Pages: ${book.getPages()}`;
     bookRead.textContent = `${book.getRead()}`;
    
+    const readButton = document.createElement("button");
+    readButton.textContent = "Read?";
+    readButton.classList.add("submitbutton");
+    readButton.addEventListener("click", () => {
+        book.read = !book.read;
+        printBooks();
+    });
 
     const removeButton = document.createElement("button");
     removeButton.textContent = "Remove";
@@ -79,6 +86,8 @@ function printBooks() {
 
     if(book.read == false) {
         bookRead.style.color = "red";
+    } else {
+        bookRead.style.color = "green";
     }
 
     bookInfo.appendChild(bookTitle);
@@ -86,6 +95,7 @@ function printBooks() {
     bookInfo.appendChild(bookPages);
     bookInfo.appendChild(bookRead)
 
+    bookInfo.appendChild(readButton);
     bookInfo.appendChild(removeButton);
     bookContainer.appendChild(bookInfo);
   });

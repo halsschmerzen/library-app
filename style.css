@@ -31,6 +31,8 @@
     grid-template-columns: 200px 200px 200px;
     grid-auto-rows: 200px;
 
+    justify-content: center;
+
     margin-top: 1rem;
     gap: 5px;
 
@@ -42,6 +44,8 @@
     justify-content: space-evenly;
     border: 1px solid black;
     font-size: 20px;
+
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 #book-container button {
@@ -50,4 +54,8 @@
     color: white;
     border-radius: 8px;
     cursor: pointer;
+}
+
+#book-container .submitbutton {
+    background-color: navy;
 }
