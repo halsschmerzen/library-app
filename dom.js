@@ -77,6 +77,10 @@ function printBooks() {
       printBooks();
     });
 
+    if(book.read == false) {
+        bookRead.style.color = "red";
+    }
+
     bookInfo.appendChild(bookTitle);
     bookInfo.appendChild(bookAuthor);
     bookInfo.appendChild(bookPages);
