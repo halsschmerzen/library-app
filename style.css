@@ -4,3 +4,50 @@
     box-sizing: border-box;
 }
 
+#header {
+    display: flex;
+    justify-content: space-between;
+    font-weight: bold;
+    padding: 0.4rem;
+    color: white;
+    background-color: slategray;
+}
+
+#header a {
+    color: white;
+    text-decoration: none;
+    color: black;
+}
+
+#container {
+    display: flex;
+    justify-content: center;
+    margin-top: 1rem;
+}
+
+#book-container {
+    display: grid;
+    grid-template-rows: 200px 200px 200px;
+    grid-template-columns: 200px 200px 200px;
+    grid-auto-rows: 200px;
+
+    margin-top: 1rem;
+    gap: 5px;
+
+}
+
+#book-container div {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    border: 1px solid black;
+    font-size: 20px;
+}
+
+#book-container button {
+    background-color: red;
+    border: none;
+    color: white;
+    border-radius: 8px;
+    cursor: pointer;
+}

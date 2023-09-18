@@ -1,77 +1,141 @@
-const myLibrary = []
+class Library {
+  constructor() {
+    // Create an empty Array containg all Book Elements
+    this.books = [];
+  }
+  // Add a Function that adds our Books and appends them into our Array of Books
+  addBook(title, author, pages, read) {
+    const book = new Book(title, author, pages, read);
+    this.books.push(book);
+  }
 
-function Book(title, author, pages) {
+  removeBook(index) {
+    this.books.splice(index, 1);
+  }
+  getAllBooks() {
+    return this.books;
+  }
+
+  readBook() {
+    return this.read;
+  }
+
+}
+
+class Book {
+  constructor(title, author, pages, read) {
     this.title = title;
     this.author = author;
     this.pages = pages;
+    this.read = read;
+  }
+  getTitle() {
+    return this.title;
+  }
 
-    this.info = function() {
-        return `Title: ${title}, Author ${author}, Pages ${pages}`;
+  getAuthor() {
+    return this.author;
+  }
+
+  getPages() {
+    return this.pages;
+  }
+
+  getRead() {
+    if(this.read == true) {
+        return "Book has been read!"
+    } else if (this.read == false) {
+        return "Has not been read yet!"
     }
+  }
 }
+
+const library = new Library();
 
 function printBooks() {
-    const bookContainer = document.getElementById("book-container");
-    bookContainer.innerHTML = "";
-    myLibrary.forEach((book, index) => {
-        const bookInfo = document.createElement("div");
-        bookInfo.textContent = `Book ${index + 1}: ${book.info()}`;
-        bookContainer.appendChild(bookInfo);
-    });
-}
+  const bookContainer = document.getElementById("book-container");
+  bookContainer.innerHTML = "";
 
+  const books = library.getAllBooks();
+  books.forEach((book, index) => {
+    const bookInfo = document.createElement("div");
+    const bookTitle = document.createElement("p");
+    const bookAuthor = document.createElement("p");
+    const bookPages = document.createElement("p");
+    const bookRead = document.createElement("p");
+
+    bookTitle.textContent = `Title: ${book.getTitle()}`;
+    bookAuthor.textContent = `Author: ${book.getAuthor()}`;
+    bookPages.textContent = `Pages: ${book.getPages()}`;
+    bookRead.textContent = `${book.getRead()}`;
+   
+
+    const removeButton = document.createElement("button");
+    removeButton.textContent = "Remove";
+    removeButton.addEventListener("click", () => {
+      library.removeBook(index);
+      printBooks();
+    });
+
+    bookInfo.appendChild(bookTitle);
+    bookInfo.appendChild(bookAuthor);
+    bookInfo.appendChild(bookPages);
+    bookInfo.appendChild(bookRead)
+
+    bookInfo.appendChild(removeButton);
+    bookContainer.appendChild(bookInfo);
+  });
+}
 
 function createInputFields() {
-    const mainContainer = document.getElementById("container");
-    const inputContainer = document.createElement("div");
+  const mainContainer = document.getElementById("container");
+  const inputContainer = document.createElement("div");
 
-    const inputName = document.createElement("input");
-    inputName.setAttribute("type", "text");
-    inputName.placeholder = "Title";
+  const inputName = createInput("text", "Title");
+  const inputAuthor = createInput("text", "Author");
+  const inputPages = createInput("number", "Pages");
+  const checkButton = createInput("checkbox");
+  // const readButton = document.createElement("button");
+  const submitBook = document.createElement("button");
+  
 
-    const inputAuthor = document.createElement("input");
-    inputAuthor.setAttribute("type", "text");
-    inputAuthor.placeholder = "Author";
+  // readButton.textContent = "Read (y/n)";
+  submitBook.textContent = "Submit!";
 
-    const inputPages = document.createElement("input");
-    inputPages.setAttribute("type", "number");
-    inputPages.placeholder = "Pages";
+  submitBook.addEventListener("click", () => {
+    const title = inputName.value;
+    const author = inputAuthor.value;
+    const pages = inputPages.value;
+    const read = checkButton.checked;
 
-    inputContainer.appendChild(inputName);
-    inputContainer.appendChild(inputAuthor);
-    inputContainer.appendChild(inputPages);
+    if(title && author && pages && typeof read == "boolean") {
+        library.addBook(title, author, parseInt(pages), read);
+        inputName.value = "";
+        inputAuthor.value = "";
+        inputPages.value = "";
+        checkButton.checked = false;
+        printBooks();
+    } else {
+        alert("Please fill out the Book Informations")
+    }
 
+  });
 
-    const bookPusher = document.createElement("button");
-    bookPusher.textContent = "Submit";
+  inputContainer.appendChild(inputName);
+  inputContainer.appendChild(inputAuthor);
+  inputContainer.appendChild(inputPages);
+  inputContainer.appendChild(checkButton);
+  // inputContainer.appendChild(readButton);
+  inputContainer.appendChild(submitBook);
 
-    inputContainer.appendChild(bookPusher);
-
-    mainContainer.appendChild(inputContainer);
-// Add Eventlitener to Book so that I can submit the Books to my Array :)
-    bookPusher.addEventListener("click", function() {
-        const title = inputName.value;
-        const author = inputAuthor.value;
-        const pages = inputPages.value;
-
-        if(title && author && pages) {
-            addBookToLibrary(title,author,parseInt(pages));
-            inputName.value = "";
-            inputAuthor.value = "";
-            inputPages.value = "";
-            printBooks();
-        } else {
-            console.log("not all fields are filled!")
-        }
-    })
-
+  mainContainer.appendChild(inputContainer);
 }
 
-function addBookToLibrary(title, author, pages) {
-
-    const book = new Book(title, author, pages);
-    myLibrary.push(book);
-    console.log("Book added", book);
+function createInput(type, placeholder) {
+  const input = document.createElement("input");
+  input.setAttribute("type", type);
+  input.placeholder = placeholder;
+  return input;
 }
 
 createInputFields();
