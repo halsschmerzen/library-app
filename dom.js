@@ -4,7 +4,22 @@ function Book(title, author, pages) {
     this.title = title;
     this.author = author;
     this.pages = pages;
+
+    this.info = function() {
+        return `Title: ${title}, Author ${author}, Pages ${pages}`;
+    }
 }
+
+function printBooks() {
+    const bookContainer = document.getElementById("book-container");
+    bookContainer.innerHTML = "";
+    myLibrary.forEach((book, index) => {
+        const bookInfo = document.createElement("div");
+        bookInfo.textContent = `Book ${index + 1}: ${book.info()}`;
+        bookContainer.appendChild(bookInfo);
+    });
+}
+
 
 function createInputFields() {
     const mainContainer = document.getElementById("container");
@@ -44,7 +59,7 @@ function createInputFields() {
             inputName.value = "";
             inputAuthor.value = "";
             inputPages.value = "";
-
+            printBooks();
         } else {
             console.log("not all fields are filled!")
         }
@@ -60,3 +75,4 @@ function addBookToLibrary(title, author, pages) {
 }
 
 createInputFields();
+printBooks();
